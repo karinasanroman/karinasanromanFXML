@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane id="AnchorPane" prefHeight="326.0" prefWidth="320" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.FXMLDocumentController">
+    <children>
+      <Button fx:id="readButton" layoutX="20.0" layoutY="63.0" mnemonicParsing="false" onAction="#readPersonalTrainer" text="Read All Trainers" />
+      <Button fx:id="updateButton" layoutX="24.0" layoutY="99.0" mnemonicParsing="false" onAction="#UpdatePersonalTrainer" text="Update Trainer" />
+      <Button fx:id="deleteButton" layoutX="150.0" layoutY="63.0" mnemonicParsing="false" onAction="#deletePersonalTrainer" text="Delete Trainer" />
+      <Button fx:id="createButton" layoutX="20.0" layoutY="21.0" mnemonicParsing="false" onAction="#createPersonalTrainer" text="Create Trainer" />
+      <Button fx:id="findByNameAndID" layoutX="20.0" layoutY="163.0" mnemonicParsing="false" onAction="#findByNameAndID" text="Find from first name and ID " />
+      <Button fx:id="findByName" layoutX="24.0" layoutY="212.0" mnemonicParsing="false" onAction="#findByFirstName" text="Find from first name and last name" />
+      <Button fx:id="findById" layoutX="147.0" layoutY="21.0" mnemonicParsing="false" onAction="#findByID" text="Find from ID" />
+    </children>
+</AnchorPane>

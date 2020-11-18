@@ -9,13 +9,20 @@ import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Scanner;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.SelectionMode;
+import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javax.persistence.EntityManager;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
@@ -54,17 +61,70 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private Button findByNameAndID;
     
+    //quiz 4 start
+    
     @FXML 
     private Button searchButton; 
     
     @FXML
     private Label inputLabel;
     
-    @FXML TableView tableView; 
+
+    
+    @FXML 
+    private TableView<personalTrainer> trainerTable; 
+    
+    @FXML
+    private TableColumn<personalTrainer, String> trainerFirstName;
+    @FXML
+    private TableColumn<personalTrainer, Integer> trainerID;
+    @FXML
+    private TableColumn<personalTrainer, String> trainerLastName;
+    @FXML
+    private TableColumn<personalTrainer, String> trainerCredentials;
     
     @FXML
     private TextField inputTextField; 
     
+    private ObservableList<personalTrainer> trainerData;
+
+  
+    public void setTableData(List<personalTrainer> trainerList) {
+
+        trainerData = FXCollections.observableArrayList();
+        trainerList.forEach(pt -> {
+            trainerData.add(pt);
+        });
+
+        trainerTable.setItems(trainerData);
+        
+        trainerTable.refresh();
+        System.out.println( trainerTable);
+    }
+    
+    
+    @FXML
+    void searchData(ActionEvent event){
+      
+        String name = inputTextField.getText();
+        List<personalTrainer> ptPerson = findByFirstName(name);
+
+        if (ptPerson == null || ptPerson.isEmpty()) {
+            Alert alert = new Alert(AlertType.INFORMATION);
+            alert.setTitle("ERROR, table is empty");
+            alert.setHeaderText("No trainers in table!");
+            alert.setContentText("add a trainer to list");
+            alert.showAndWait(); 
+        } else {
+            setTableData(ptPerson);
+        }
+    }
+    
+    
+    
+    
+    //quiz four end 
+    //Quiz three start
     
     @FXML
     private void handleButtonAction(ActionEvent event) {
@@ -83,11 +143,19 @@ public class FXMLDocumentController implements Initializable {
     
     //database manager
     EntityManager manager;
-    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         manager = (EntityManager) Persistence.createEntityManagerFactory("KarinaSanRomanFXMLPU").createEntityManager();
-        
+              
+        trainerFirstName.setCellValueFactory(new PropertyValueFactory<>("First Name"));
+        trainerLastName.setCellValueFactory(new PropertyValueFactory<>("Last Name"));
+        trainerID.setCellValueFactory(new PropertyValueFactory<>("ID"));
+        trainerCredentials.setCellValueFactory(new PropertyValueFactory<>("Credentials"));
+
+      
+       trainerTable.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+       trainerTable.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+
     }
     
 
@@ -134,6 +202,18 @@ public class FXMLDocumentController implements Initializable {
         
     }
     
+    public List<personalTrainer> findByCredentials(String credentials){
+        Query query = manager.createNamedQuery("personalTrainer.findByCredentials");
+        query.setParameter("credentials", credentials);
+        List<personalTrainer> trainers = query.getResultList();
+        for(personalTrainer trainer : trainers){
+            System.out.println(trainer.getId() + " "
+                               + trainer.getFirstname() + " "
+                               + trainer.getCredentials());
+        }
+     return trainers; 
+    }
+    
     public personalTrainer findById (int id){
         Query query = manager.createNamedQuery("personalTrainer.findById");
         
@@ -152,8 +232,18 @@ public class FXMLDocumentController implements Initializable {
         query.setParameter("firstname", firstName);
         List<personalTrainer> trainers = query.getResultList();
         for(personalTrainer trainer : trainers){
+            System.out.println(trainer.getId() + " "+ trainer.getFirstname() + " " + trainer.getCredentials());
+        }
+     return trainers; 
+    }
+    
+     public List<personalTrainer> findByLastName(String LastName){
+        Query query = manager.createNamedQuery("personalTrainer.findByLastname");
+        query.setParameter("lastname", LastName);
+        List<personalTrainer> trainers = query.getResultList();
+        for(personalTrainer trainer : trainers){
             System.out.println(trainer.getId() + " "
-                               + trainer.getFirstname() + " "
+                               + trainer.getLastname() + " "
                                + trainer.getCredentials());
         }
      return trainers; 
@@ -265,20 +355,58 @@ public void createPersonalTrainer(ActionEvent event){
     Create(trainer);
 }    
 
-    @FXML void readPersonalTrainer(){
+    @FXML void readPersonalTrainer(ActionEvent event){
+        Scanner userInput = new Scanner(System.in);
         
+        System.out.println("Enter a way to find the person");
+        System.out.println("1) All, 2) ID, 3) first name, 4) last name, 5) Credentials");
+        System.out.println("Enter which number you chose:");
+        int choice = userInput.nextInt(); 
+        
+        if(choice ==1){
+            List <personalTrainer> ptPerson = findAll(); 
+        }
+        
+        if(choice ==2){
+            System.out.println("Enter ID: ");
+            int id = userInput.nextInt();
+            System.out.println("");
+            
+            personalTrainer ptPerson = findById(id);
+             
+        }
+        
+        if(choice ==3){
+            System.out.println("Enter First Name:");
+            String fName = userInput.next();
+            System.out.println("");
+            
+            List <personalTrainer> ptPerson = findByFirstName(fName);
+        }
+        
+        
+        if(choice ==4){
+            System.out.println("Enter Last Name:");
+            String LName = userInput.next();
+            System.out.println("");
+            
+            List <personalTrainer> ptPerson = findByLastName(LName);
+        }
+        
+        
+        if(choice ==5){
+            System.out.println("Enter Credentials: ");
+            String credentials = userInput.next(); 
+            System.out.println("");
+            
+            List<personalTrainer> ptPerson = findByCredentials(credentials);
+           
+        }
+   
     }
    
-    //demo code
-    @FXML
-    void findByFirstName(ActionEvent event){
-        Scanner userInput = new Scanner(System.in);
-        System.out.println("Enter first name: ");
-        String fName = userInput.next(); 
-        
-        List<personalTrainer> pt = findByFirstName(fName);
-        System.out.println(pt.toString());
-    }
+    
+    
     
  @FXML
     void findByNameAndID(ActionEvent event) {
@@ -294,10 +422,18 @@ public void createPersonalTrainer(ActionEvent event){
         List<personalTrainer> students =  findByNameAndID(name, id);
 
     }
+  
     
     @FXML
-    void searchData(ActionEvent event){
-        System.out.println("Clicked");
+    void findByFirstName(ActionEvent event ){
+        Scanner input = new Scanner(System.in);
+
+        // read input from command line
+        System.out.println("Enter First Name:");
+        String name = input.next();
+
+        List<personalTrainer> pt = findByFirstName(name);
+       
     }
     
     
@@ -307,12 +443,12 @@ public void createPersonalTrainer(ActionEvent event){
         Scanner input = new Scanner(System.in);
   
         System.out.println("Enter First Name:");
-        String name = input.next();
+        String fname = input.next();
         
         System.out.println("Enter Last Name:");
-        int id = input.nextInt();
+        String lName = input.next();
             
-        List<personalTrainer> students =  findByNameAndID(name, id);
+        List<personalTrainer> personalTrainer =  findByFirstNameAndLastName(fname, lName);
 
     }
    

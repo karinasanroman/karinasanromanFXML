@@ -14,6 +14,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javax.persistence.EntityManager;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
@@ -51,6 +53,17 @@ public class FXMLDocumentController implements Initializable {
     
     @FXML
     private Button findByNameAndID;
+    
+    @FXML 
+    private Button searchButton; 
+    
+    @FXML
+    private Label inputLabel;
+    
+    @FXML TableView tableView; 
+    
+    @FXML
+    private TextField inputTextField; 
     
     
     @FXML
@@ -121,10 +134,10 @@ public class FXMLDocumentController implements Initializable {
         
     }
     
-    public personalTrainer findByID (int id){
+    public personalTrainer findById (int id){
         Query query = manager.createNamedQuery("personalTrainer.findById");
         
-        query.setParameter("ID", id);
+        query.setParameter("id", id);
         personalTrainer trainer = (personalTrainer) query.getSingleResult();
         if(trainer != null){
             System.out.println(trainer.getId() + " "
@@ -136,7 +149,7 @@ public class FXMLDocumentController implements Initializable {
     
     public List<personalTrainer> findByFirstName(String firstName){
         Query query = manager.createNamedQuery("personalTrainer.findByFirstname");
-        query.setParameter("FIRSTNAME", firstName);
+        query.setParameter("firstname", firstName);
         List<personalTrainer> trainers = query.getResultList();
         for(personalTrainer trainer : trainers){
             System.out.println(trainer.getId() + " "
@@ -149,8 +162,8 @@ public class FXMLDocumentController implements Initializable {
    public List<personalTrainer> findByNameAndID(String fname, int id){
         Query query = manager.createNamedQuery("personalTrainer.findByNameAndID");
    
-        query.setParameter("ID", id);
-        query.setParameter("First Name", fname);
+        query.setParameter("id", id);
+        query.setParameter("firstname", fname);
  
         List<personalTrainer> trainers =  query.getResultList();
         for (personalTrainer trainer: trainers) {
@@ -163,8 +176,8 @@ public class FXMLDocumentController implements Initializable {
        public List<personalTrainer> findByFirstNameAndLastName(String fname, String lname){
         Query query = manager.createNamedQuery("personalTrainer.findByNameAndID");
    
-        query.setParameter("Last Name", lname);
-        query.setParameter("First Name", fname);
+        query.setParameter("lastname", lname);
+        query.setParameter("firstname", fname);
  
         List<personalTrainer> trainers =  query.getResultList();
         for (personalTrainer trainer: trainers) {
@@ -258,19 +271,6 @@ public void createPersonalTrainer(ActionEvent event){
    
     //demo code
     @FXML
-    void findByID(ActionEvent event){
-        Scanner input = new Scanner(System.in);
-        
-        System.out.println("Enter ID: ");
-        int id =input.nextInt();
-        
-        personalTrainer pt = findByID(id); 
-        System.out.println(pt.toString());
-        
-    }
-    
-    //demo code
-    @FXML
     void findByFirstName(ActionEvent event){
         Scanner userInput = new Scanner(System.in);
         System.out.println("Enter first name: ");
@@ -295,6 +295,12 @@ public void createPersonalTrainer(ActionEvent event){
 
     }
     
+    @FXML
+    void searchData(ActionEvent event){
+        System.out.println("Clicked");
+    }
+    
+    
      @FXML
     void findByFirstNameAndLastName(ActionEvent event) {
  
@@ -316,26 +322,34 @@ public void createPersonalTrainer(ActionEvent event){
 public void UpdatePersonalTrainer(ActionEvent event){
     Scanner userInput = new Scanner(System.in);
     
-    System.out.println("Enter credentials: ");
+    System.out.println("Enter ID: ");
+    int id = userInput.nextInt();
+    
+    System.out.print("Orginal: "); 
+    findById(id);
+    System.out.println("");
+    
+    
+    System.out.println("Enter new or orgininal credentials: ");
     String cred = userInput.next();
     
-    System.out.println("Enter First Name: ");
+    System.out.println("Enter new or original First Name: ");
     String fName = userInput.next();
     
-    System.out.println("Enter Last Name: ");
+    System.out.println("Enter new or original Last Name: ");
     String lName = userInput.next();
-    
-    System.out.println("Enter ID: ");
-    int id = userInput.nextInt(); 
     
     personalTrainer trainer = new personalTrainer(); 
     
+    //set them 
     trainer.setCredentials(cred);
     trainer.setFirstname(fName);
     trainer.setLastname(lName);
     trainer.setId(id);
     
     update(trainer);
+    System.out.print("Update: ");
+    findById(id);
 }
 
 //used demo/source code to help
@@ -345,7 +359,7 @@ public void deletePersonalTrainer(ActionEvent event){
     System.out.println("Enter ID");
     int id = userInput.nextInt();
     
-    personalTrainer pt = findByID(id); 
+    personalTrainer pt = findById(id); 
     System.out.println("Delete: " + pt.toString());
     delete(pt);
     

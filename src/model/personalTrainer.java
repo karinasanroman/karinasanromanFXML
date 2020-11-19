@@ -29,6 +29,8 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "personalTrainer.findByLastname", query = "SELECT p FROM personalTrainer p WHERE p.lastname = :lastname")
     , @NamedQuery(name = "personalTrainer.findByCredentials", query = "SELECT p FROM personalTrainer p WHERE p.credentials = :credentials")
     , @NamedQuery(name = "personalTrainer.findByNameAndID", query = "SELECT p FROM personalTrainer p WHERE p.firstname = :firstname and p.id = :id")
+    , @NamedQuery(name = "personalTrainer.findByNameAndLastName", query = "SELECT p FROM personalTrainer p WHERE p.firstname = :firstname and p.lastname = :lastname")
+    , @NamedQuery(name = "personalTrainer.findByFirstNameAdvanced", query = "SELECT p FROM personalTrainer p WHERE  LOWER(p.firstname) LIKE  CONCAT('%', LOWER(:firstname), '%')")
 
 })
     

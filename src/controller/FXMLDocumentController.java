@@ -52,6 +52,9 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private Button findByName; 
     
+    
+    private Button advancedSearchButton; 
+    
     @FXML
     private Button deleteButton; 
     
@@ -105,6 +108,7 @@ public class FXMLDocumentController implements Initializable {
     
     @FXML
     void searchData(ActionEvent event){
+        System.out.println("Click");
       
         String name = inputTextField.getText();
         List<personalTrainer> ptPerson = findByFirstName(name);
@@ -120,6 +124,25 @@ public class FXMLDocumentController implements Initializable {
         }
     }
     
+    @FXML
+     void advancedSearch(ActionEvent event) {
+       
+        String name = inputTextField.getText();
+        List<personalTrainer> trainers = findByFirstNameAdvanced(name);
+        
+        if (trainers == null || trainers.isEmpty()) {
+
+            Alert alert = new Alert(AlertType.INFORMATION);
+            alert.setTitle("ERROR, table is empty");
+            alert.setHeaderText("No trainers in table!");
+            alert.setContentText("add a trainer to list");
+            alert.showAndWait(); 
+        } else {
+            setTableData(trainers);
+            
+        }
+        
+    }
     
     
     
@@ -147,9 +170,9 @@ public class FXMLDocumentController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         manager = (EntityManager) Persistence.createEntityManagerFactory("KarinaSanRomanFXMLPU").createEntityManager();
               
-        trainerFirstName.setCellValueFactory(new PropertyValueFactory<>("First Name"));
-        trainerLastName.setCellValueFactory(new PropertyValueFactory<>("Last Name"));
-        trainerID.setCellValueFactory(new PropertyValueFactory<>("ID"));
+        trainerFirstName.setCellValueFactory(new PropertyValueFactory<>("Firstname"));
+        trainerLastName.setCellValueFactory(new PropertyValueFactory<>("Lastname"));
+        trainerID.setCellValueFactory(new PropertyValueFactory<>("Id"));
         trainerCredentials.setCellValueFactory(new PropertyValueFactory<>("Credentials"));
 
       
@@ -264,7 +287,7 @@ public class FXMLDocumentController implements Initializable {
     }      
    
        public List<personalTrainer> findByFirstNameAndLastName(String fname, String lname){
-        Query query = manager.createNamedQuery("personalTrainer.findByNameAndID");
+        Query query = manager.createNamedQuery("personalTrainer.findByNameAndLastName");
    
         query.setParameter("lastname", lname);
         query.setParameter("firstname", fname);
@@ -277,6 +300,19 @@ public class FXMLDocumentController implements Initializable {
         return trainers;
     } 
     
+     public List<personalTrainer> findByFirstNameAdvanced(String fname) {
+        Query query = manager.createNamedQuery("personalTrainer.findByFirstNameAdvanced");
+
+  
+        query.setParameter("firstname", fname);
+
+        List<personalTrainer> trainers = query.getResultList();
+        for (personalTrainer trainer : trainers) {
+            System.out.println(trainer.getId() + " " + trainer.getFirstname()+ " " + trainer.getCredentials());
+        }
+
+        return trainers;
+    }     
  
     
     @FXML

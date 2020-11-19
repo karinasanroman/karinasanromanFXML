@@ -10,7 +10,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane id="AnchorPane" prefHeight="552.0" prefWidth="425.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.FXMLDocumentController">
+<AnchorPane id="AnchorPane" prefHeight="576.0" prefWidth="447.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.FXMLDocumentController">
     <children>
       <Button fx:id="readButton" layoutX="33.0" layoutY="52.0" mnemonicParsing="false" onAction="#readPersonalTrainer" text="Read all " />
       <Button fx:id="updateButton" layoutX="28.0" layoutY="143.0" mnemonicParsing="false" onAction="#UpdatePersonalTrainer" text="update person" />
@@ -19,7 +19,7 @@
       <Button fx:id="findByNameAndID" layoutX="30.0" layoutY="95.0" mnemonicParsing="false" text="Read by first name and ID " />
       <Button fx:id="findByName" layoutX="168.0" layoutY="51.0" mnemonicParsing="false" onAction="#findByFirstName" prefHeight="26.0" prefWidth="198.0" text="Read By First and Last name" />
       <Button layoutX="280.0" layoutY="182.0" mnemonicParsing="false" text="Click me!" />
-      <Separator layoutX="6.0" layoutY="208.0" prefHeight="18.0" prefWidth="382.0" />
+      <Separator layoutX="6.0" layoutY="208.0" prefHeight="18.0" prefWidth="433.0" />
       <Text layoutX="28.0" layoutY="238.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Search People">
          <font>
             <Font name="Calibri" size="20.0" />
@@ -28,7 +28,7 @@
       <TextField fx:id="inputTextField" layoutX="136.0" layoutY="253.0" prefHeight="26.0" prefWidth="101.0" />
       <Label fx:id="inputLabel" layoutX="16.0" layoutY="257.0" text="Enter First Name: " />
       <Button fx:id="searchButton" layoutX="297.0" layoutY="233.0" mnemonicParsing="false" onAction="#searchData" text="Search" />
-      <TableView fx:id="trainerTable" layoutX="19.0" layoutY="306.0" prefHeight="229.0" prefWidth="343.0">
+      <TableView fx:id="trainerTable" layoutX="52.0" layoutY="305.0" prefHeight="229.0" prefWidth="343.0">
         <columns>
           <TableColumn fx:id="trainerID" prefWidth="47.99996566772461" text="ID" />
           <TableColumn fx:id="trainerFirstName" prefWidth="94.4000244140625" text="FirstName" />
@@ -37,5 +37,6 @@
         </columns>
       </TableView>
       <Button fx:id="advancedSearchButton" layoutX="258.0" layoutY="266.0" mnemonicParsing="false" onAction="#advancedSearch" prefHeight="26.0" prefWidth="129.0" text="Advanced Search" />
+      <Button fx:id="showDetailsButton" layoutX="280.0" layoutY="535.0" mnemonicParsing="false" onAction="#showDetails" prefHeight="26.0" prefWidth="108.0" text="Show Details" />
     </children>
 </AnchorPane>

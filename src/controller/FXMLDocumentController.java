@@ -16,6 +16,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -167,6 +168,34 @@ public class FXMLDocumentController implements Initializable {
         stage.setScene(tableViewScene);
         stage.show();
 
+    }
+        
+    @FXML
+    void showDetailsInPlace(ActionEvent event) throws IOException {
+        System.out.println("clicked");
+
+        personalTrainer selectedStudent = trainerTable.getSelectionModel().getSelectedItem();
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/DetailedModelView.fxml"));
+
+        Parent detailedModelView = loader.load();
+
+        Scene tableViewScene = new Scene(detailedModelView);
+
+        DetailedModelViewController detailedControlled = loader.getController();
+
+
+        detailedControlled.initData(selectedStudent);
+
+   
+        Scene currentScene = ((Node) event.getSource()).getScene();
+        detailedControlled.setPreviousScene(currentScene);
+
+  
+        Stage stage = (Stage) currentScene.getWindow();
+
+        stage.setScene(tableViewScene);
+        stage.show();
     }
     
     //quiz four end 

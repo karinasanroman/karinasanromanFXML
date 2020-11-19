@@ -25,7 +25,7 @@
             <Font name="Calibri" size="20.0" />
          </font>
       </Text>
-      <TextField fx:id="inputTextField" layoutX="136.0" layoutY="253.0" prefHeight="26.0" prefWidth="101.0" />
+      <TextField fx:id="inputTextField" layoutX="117.0" layoutY="253.0" prefHeight="26.0" prefWidth="101.0" />
       <Label fx:id="inputLabel" layoutX="16.0" layoutY="257.0" text="Enter First Name: " />
       <Button fx:id="searchButton" layoutX="297.0" layoutY="233.0" mnemonicParsing="false" onAction="#searchData" text="Search" />
       <TableView fx:id="trainerTable" layoutX="52.0" layoutY="305.0" prefHeight="229.0" prefWidth="343.0">
@@ -36,7 +36,8 @@
             <TableColumn fx:id="trainerCredentials" prefWidth="104.79997253417969" text="Credentials" />
         </columns>
       </TableView>
-      <Button fx:id="advancedSearchButton" layoutX="258.0" layoutY="266.0" mnemonicParsing="false" onAction="#advancedSearch" prefHeight="26.0" prefWidth="129.0" text="Advanced Search" />
+      <Button fx:id="advancedSearchButton" layoutX="237.0" layoutY="266.0" mnemonicParsing="false" onAction="#advancedSearch" prefHeight="26.0" prefWidth="157.0" text="Advanced Search" />
       <Button fx:id="showDetailsButton" layoutX="280.0" layoutY="535.0" mnemonicParsing="false" onAction="#showDetails" prefHeight="26.0" prefWidth="108.0" text="Show Details" />
+      <Button fx:id="showDetailsInPlaceButton" layoutX="60.0" layoutY="535.0" mnemonicParsing="false" onAction="#showDetailsInPlace" prefHeight="26.0" prefWidth="177.0" text="show details in-place" />
     </children>
 </AnchorPane>

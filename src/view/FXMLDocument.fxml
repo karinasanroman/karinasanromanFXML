@@ -10,31 +10,32 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane id="AnchorPane" prefHeight="552.0" prefWidth="378.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.FXMLDocumentController">
+<AnchorPane id="AnchorPane" prefHeight="552.0" prefWidth="425.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.FXMLDocumentController">
     <children>
       <Button fx:id="readButton" layoutX="33.0" layoutY="52.0" mnemonicParsing="false" onAction="#readPersonalTrainer" text="Read all " />
       <Button fx:id="updateButton" layoutX="28.0" layoutY="143.0" mnemonicParsing="false" onAction="#UpdatePersonalTrainer" text="update person" />
       <Button fx:id="deleteButton" layoutX="31.0" layoutY="182.0" mnemonicParsing="false" onAction="#deletePersonalTrainer" text="delete person" />
       <Button fx:id="createButton" layoutX="30.0" layoutY="14.0" mnemonicParsing="false" onAction="#createPersonalTrainer" text="Create Person" />
       <Button fx:id="findByNameAndID" layoutX="30.0" layoutY="95.0" mnemonicParsing="false" text="Read by first name and ID " />
-      <Button fx:id="findByName" layoutX="139.0" layoutY="52.0" mnemonicParsing="false" onAction="#findByFirstName" prefHeight="26.0" prefWidth="169.0" text="Read by Full Name " />
+      <Button fx:id="findByName" layoutX="168.0" layoutY="51.0" mnemonicParsing="false" onAction="#findByFirstName" prefHeight="26.0" prefWidth="198.0" text="Read By First and Last name" />
       <Button layoutX="280.0" layoutY="182.0" mnemonicParsing="false" text="Click me!" />
-      <Separator layoutX="6.0" layoutY="208.0" prefHeight="18.0" prefWidth="358.0" />
-      <Text layoutX="37.0" layoutY="241.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Search People">
+      <Separator layoutX="6.0" layoutY="208.0" prefHeight="18.0" prefWidth="382.0" />
+      <Text layoutX="28.0" layoutY="238.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Search People">
          <font>
             <Font name="Calibri" size="20.0" />
          </font>
       </Text>
-      <TextField fx:id="inputTextField" layoutX="115.0" layoutY="258.0" />
-      <Label fx:id="inputLabel" layoutX="29.0" layoutY="262.0" text="Enter Name: " />
-      <Button fx:id="searchButton" layoutX="286.0" layoutY="258.0" mnemonicParsing="false" onAction="#searchData" text="Search" />
-      <TableView fx:id="tableView" layoutX="19.0" layoutY="306.0" prefHeight="229.0" prefWidth="343.0">
+      <TextField fx:id="inputTextField" layoutX="136.0" layoutY="253.0" prefHeight="26.0" prefWidth="101.0" />
+      <Label fx:id="inputLabel" layoutX="16.0" layoutY="257.0" text="Enter First Name: " />
+      <Button fx:id="searchButton" layoutX="297.0" layoutY="233.0" mnemonicParsing="false" onAction="#searchData" text="Search" />
+      <TableView fx:id="trainerTable" layoutX="19.0" layoutY="306.0" prefHeight="229.0" prefWidth="343.0">
         <columns>
-          <TableColumn prefWidth="47.99996566772461" text="ID" />
-          <TableColumn prefWidth="94.4000244140625" text="First Name " />
-            <TableColumn prefWidth="92.79998779296875" text="Last Name " />
-            <TableColumn prefWidth="104.79997253417969" text="Credentials" />
+          <TableColumn fx:id="trainerID" prefWidth="47.99996566772461" text="ID" />
+          <TableColumn fx:id="trainerFirstName" prefWidth="94.4000244140625" text="FirstName" />
+            <TableColumn fx:id="trainerLastName" prefWidth="92.79998779296875" text="LastName" />
+            <TableColumn fx:id="trainerCredentials" prefWidth="104.79997253417969" text="Credentials" />
         </columns>
       </TableView>
+      <Button fx:id="advancedSearchButton" layoutX="258.0" layoutY="266.0" mnemonicParsing="false" onAction="#advancedSearch" prefHeight="26.0" prefWidth="129.0" text="Advanced Search" />
     </children>
 </AnchorPane>
